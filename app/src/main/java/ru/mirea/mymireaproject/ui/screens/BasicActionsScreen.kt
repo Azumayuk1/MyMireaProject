@@ -1,8 +1,5 @@
 package ru.mirea.mymireaproject.ui.screens
 
-import android.content.ContentResolver
-import android.provider.Settings
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,21 +9,21 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ru.mirea.mymireaproject.part1.ButtonShowAndroidId
 import ru.mirea.mymireaproject.ui.theme.MyMireaProjectTheme
 
-fun getAndroidId(contentResolver: ContentResolver): String {
-    return Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-}
 
 @Composable
-fun BasicActionsScreen() {
+fun BasicActionsScreen(
+    navigateToPartTwoScreen: () -> Unit
+) {
     MyMireaProjectTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column {
-                ButtonShowAndroidId(modifier = Modifier.padding(8.dp))
+                ButtonShowAndroidId(modifier = Modifier.padding(4.dp))
+                ButtonNavigateToPartTwo(modifier = Modifier.padding(4.dp), navigateToPartTwoScreen)
             }
         }
     }
@@ -35,16 +32,13 @@ fun BasicActionsScreen() {
 @Preview
 @Composable
 fun BasicActionsScreenPreview() {
-
+    BasicActionsScreen() {  }
 }
 
 @Composable
-fun ButtonShowAndroidId(modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    Button(onClick = {
-        Toast.makeText(context, getAndroidId(context.contentResolver), Toast.LENGTH_LONG ).show()
-    },
-        modifier = modifier) {
-        Text(text = "Show Android ID", style = MaterialTheme.typography.labelMedium)
+fun ButtonNavigateToPartTwo(modifier: Modifier = Modifier, onClick: () -> Unit) {
+    Button(modifier = modifier, onClick = onClick) {
+        Text("Navigate to Part Two (App list)", style = MaterialTheme.typography.labelMedium)
     }
 }
+

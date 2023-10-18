@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyMireaProject</string>
+    <string name="title_activity_part_two">PartTwoActivity</string>
 </resources>
