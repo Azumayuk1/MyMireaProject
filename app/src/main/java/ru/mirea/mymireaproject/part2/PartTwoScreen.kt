@@ -28,8 +28,20 @@ import androidx.compose.ui.unit.dp
 import ru.mirea.mymireaproject.ui.theme.MyMireaProjectTheme
 
 @Composable
-fun PartTwoScreen(dataList: List<Pair<String, String>>) {
+fun PartTwoScreen(
+    onExitRequest: () -> Unit
+) {
     MyMireaProjectTheme {
+        val apps: List<PackageInfo> =
+            GetAppsList.getInstalledApps(true, LocalContext.current)
+
+        val applicationAndPackagesList = mutableListOf<Pair<String, String>>()
+        for (app in apps) {
+            applicationAndPackagesList.add(
+                Pair(app.appName, app.packageName)
+            )
+        }
+
         var shouldShowAnydeskAlertDialog by remember {
             mutableStateOf(true)
         }
@@ -37,12 +49,13 @@ fun PartTwoScreen(dataList: List<Pair<String, String>>) {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column {
                 val context = LocalContext.current
+
                 Text(
                     text = "App list:",
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(4.dp)
                 )
-                AppList(dataList = dataList)
+                AppList(dataList = applicationAndPackagesList)
 
                 val anyDeskInstalled =
                     GetAppsList.checkIfRemoteAccessInstalled(context)
@@ -50,13 +63,13 @@ fun PartTwoScreen(dataList: List<Pair<String, String>>) {
                 if (anyDeskInstalled && shouldShowAnydeskAlertDialog) {
                     AlertDialogAnyDeskPresent(
                         onDismissRequest = {
-                            showBeAwareToast(context)
                             shouldShowAnydeskAlertDialog = false
                         },
                         onConfirmation = {
-                            showBeAwareToast(context)
                             shouldShowAnydeskAlertDialog = false
-                        }
+                            showBeAwareToast(context)
+                        },
+                        onExitRequest = onExitRequest
                     )
                 }
             }
@@ -71,6 +84,7 @@ fun AlertDialogAnyDeskPresent(
     dialogTitle: String = "Обнаружен AnyDesk",
     dialogText: String = "Приложение удалённого доступа" +
             " может быть использовано хакерами для кражи ваших данных.",
+    onExitRequest: () -> Unit
 ) {
     AlertDialog(
         title = {
@@ -95,9 +109,10 @@ fun AlertDialogAnyDeskPresent(
             TextButton(
                 onClick = {
                     onDismissRequest()
+                    onExitRequest()
                 }
             ) {
-                Text("Игнорировать")
+                Text("Выйти")
             }
         }
     )
