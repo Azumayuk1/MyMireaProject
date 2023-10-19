@@ -1,4 +1,4 @@
-package ru.mirea.mymireaproject.part2
+package ru.mirea.mymireaproject.part2.ui
 
 import android.content.Context
 import android.widget.Toast
@@ -25,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ru.mirea.mymireaproject.part2.GetAppsList
+import ru.mirea.mymireaproject.part2.PackageInfo
 import ru.mirea.mymireaproject.ui.theme.MyMireaProjectTheme
 
 @Composable

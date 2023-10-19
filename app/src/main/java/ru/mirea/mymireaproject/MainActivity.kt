@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ru.mirea.mymireaproject.part2.PartTwoScreen
+import ru.mirea.mymireaproject.part2.ui.PartTwoScreen
 import ru.mirea.mymireaproject.ui.screens.BasicActionsScreen
 import ru.mirea.mymireaproject.ui.theme.MyMireaProjectTheme
 
